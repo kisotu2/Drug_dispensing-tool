@@ -1,3 +1,28 @@
+<?php
+require_once("mainconnection.php");
+
+// Assuming the doctor's details are stored in the session variables
+$SSN = $_REQUEST['SSN'];
+$Name = $_REQUEST['Name'];
+
+// Query to fetch the records of the logged-in doctor only
+$sql = "SELECT * FROM doctors WHERE SSN = '$SSN' AND Name = '$Name'";
+$result = mysqli_query($conn, $sql);
+
+if (mysqli_num_rows($result) == 1) {
+    // Fetch the record of the logged-in doctor
+    $doctorData = mysqli_fetch_assoc($result);
+    // Display the doctor's information
+    echo "<h2>My Records</h2>";
+    echo "SSN: " . $doctorData['SSN'] . "<br>";
+    echo "Name: " . $doctorData['Name'] . "<br>";
+    echo "Specialty: " . $doctorData['Specialty'] . "<br>";
+    // Additional information about the logged-in doctor can be displayed here
+} else {
+    // No record found for the logged-in doctor
+    echo "No records found.";
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -77,21 +102,19 @@ body {
 <body>
 
 <div class="sidenav">
-  <a href="#my records">My records</a>
-  <a href="#">Services</a>
+  <a href="doctordetails.php">My records</a>
+  <a href="prescription.php">Prescription of a Drug</a>
   <a href="#contact">Contact</a>
 
-    <i class="fa fa-caret-down"></i>
+  <i class="fa fa-caret-down"></i>
   
  
   <a href="#contact">Search</a>
 </div>
 
 <div class="main">
-  <h2>	Welcome</h2>
- 
+  <h2>Welcome</h2>
 </div>
 
-
 </body>
-</html> 
+</html>

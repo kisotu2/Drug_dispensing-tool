@@ -2,33 +2,37 @@
 require_once("mainconnection.php");
 session_start();
 
+$conn = mysqli_connect("localhost", "root", "", "drug_dispensing");
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Username and password sent from form
-    echo "Hi";
     $SSN = mysqli_real_escape_string($conn, $_POST['SSN']);
     $Name = mysqli_real_escape_string($conn, $_POST['Name']);
 
-    $sql = "SELECT SSN,Name,Specialty FROM doctors";
+    $sql = "SELECT SSN, Name, Specialty FROM doctors WHERE SSN = '$SSN' AND Name = '$Name'";
     $result = mysqli_query($conn, $sql);
-    
-    $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-    $count = mysqli_num_rows($result);
-    print_r($result);
-    if ($count < 1)
-    {
-      echo "User not Found";
-      header("Location: doctortloginform.php");
-      exit;
-    }
-    // If result matched $Name and $Password, table row must be 1 row
-    if ($count == 1) {
-        $_SESSION['SSN'] = $SSN;
-        $_SESSION['Name'] = $Name;
 
-        header("Location: doctordashboard.html");
+    $count = mysqli_num_rows($result);
+
+    if ($count == 1) {
+        // User found, retrieve their details
+        $row = mysqli_fetch_assoc($result);
+
+        // Store the user details in the session
+        $_SESSION['SSN'] = $row['SSN'];
+        $_SESSION['Name'] = $row['Name'];
+        $_SESSION['Specialty'] = $row['Specialty'];
+
+        header("Location: doctordashboard.php");
         exit;
     } else {
-        $error = "Your SSN  or Name is invalid";
+        // User not found or invalid credentials
+        $error = "Your SSN or Name is invalid";
+        header("Location: doctorloginform.php?error=$error");
+        exit;
     }
 }
 ?>
