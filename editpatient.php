@@ -112,7 +112,3 @@ $conn->close();
 </body>
 
 </html>
-
-
-
-
