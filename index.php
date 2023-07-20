@@ -48,41 +48,39 @@
         <input type="submit" value="Withdraw Drug">
     </form>
 
+    <form action="index.php" method="post">
+        <input type="radio" name="status" value="prescribed" id="prescribed" <?php if(isset($_POST['status']) && $_POST['status'] === 'prescribed') echo 'checked'; ?>>
+        <label for="prescribed">Show Prescribed</label>
+        <input type="radio" name="status" value="dispensed" id="dispensed" <?php if(isset($_POST['status']) && $_POST['status'] === 'dispensed') echo 'checked'; ?>>
+        <label for="dispensed">Show Dispensed</label>
+        <input type="submit" value="Show">
+    </form>
+
     <?php
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        if (isset($_POST["drug"])) {
-            $selectedDrug = $_POST["drug"];
+        // Check if the "status" radio button is selected
+        if (isset($_POST["status"])) {
+            $selectedStatus = $_POST["status"];
 
-            // Update the 'prescription' table with the withdrawn drug
-            // Assuming the 'prescription' table has columns: 'id' (auto-increment), 'drug_name', and 'withdrawn_date'
+            // Update the 'prescription' table with the selected status
+            // Assuming the 'prescription' table has columns: 'id' (auto-increment), 'drug_name', 'withdrawn_date', and 'status'
             $conn = new mysqli('localhost', 'root', '', 'drug_dispensing');
             if ($conn->connect_error) {
                 die("Connection failed: " . $conn->connect_error);
             }
 
-            // Check if the selected drug exists in the 'drugs' table
-            $checkDrug = "SELECT * FROM drugs WHERE tradename = '$selectedDrug'";
-            $result = $conn->query($checkDrug);
-
-            if ($result->num_rows > 0) {
-                // Insert the withdrawn drug into the 'prescription' table
-                $insertPrescription = "INSERT INTO prescription (drug_name, withdrawn_date) VALUES ('$selectedDrug', NOW())";
-                if ($conn->query($insertPrescription) === TRUE) {
-                    echo '<div id="color-display">Drug Withdrawn: ' . ucfirst($selectedDrug) . '</div>';
-
-                    // Update the 'drugs' table to reduce the drug count by 1
-                    $updateDrugs = "UPDATE drugs SET count = count - 1 WHERE tradename = '$selectedDrug'";
-                    $conn->query($updateDrugs);
-                } else {
-                    echo "Error: " . $insertPrescription . "<br>" . $conn->error;
-                }
+            // Insert the selected status into the 'prescription' table
+            $insertStatus = "INSERT INTO prescription (status) VALUES ('$selectedStatus')";
+            if ($conn->query($insertStatus) === TRUE) {
+                echo '<div id="color-display">Status Selected: ' . ucfirst($selectedStatus) . '</div>';
             } else {
-                echo '<div id="color-display">Drug Not Available: ' . ucfirst($selectedDrug) . '</div>';
+                echo "Error: " . $insertStatus . "<br>" . $conn->error;
             }
 
             $conn->close();
         }
     }
     ?>
+    <p><a href="dispensed.php">View Dispensed Drugs</a></p>
 </body>
 </html>
