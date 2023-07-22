@@ -1,0 +1,26 @@
+.container {
+    background-image: url("https://img.freepik.com/free-photo/medicine-capsules-global-health-with-geometric-pattern-digital-remix_53876-126742.jpg?w=2000");
+    
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+  
+    padding: 10%;
+
+
+}
+h2{
+    font-size: 24;
+    font-family: Arial, Helvetica, sans-serif;
+    font-style: oblique;
+    font-weight: 700;
+}
+p{
+    font-size: 40px;
+    font-family: Arial, Helvetica, sans-serif;
+
+  
+}

@@ -1,0 +1,58 @@
+.notebox{
+    border: 4px solid #666;
+    padding: 5em;
+}
+.notebox.warning{
+    border: 4px solid orange;
+    font-weight:  bold;
+
+}
+.notebox.danger{
+    border:4px solid red;
+    font-weight: bold;
+}
+article p:first-child{
+    color: red;
+    font-size: larger;
+}
+li[class]{
+    font-size: 200%;
+}
+li[class="a"]{
+    background-color: yellow;
+}
+li[class~="a"]{
+    color: red;
+}
+.box{
+    border:1px solid #333;
+    width:200px;
+    height:100px;
+    overflow: scroll;
+}
+.wrapper{
+    font-size: 1em;
+    border-width: 10cm;
+    margin: 10cm;
+    padding: 4%;
+    
+}
+.px{
+    width:200px;
+    border-width: 2cm;
+    margin: 10cm;
+    padding: 4%;
+
+}
+.vx{
+    width: 10vw;
+    border-color: black;
+    border-width: 15cm;
+
+}
+.em{
+    width: 10cm;
+    border-color: black;
+    border-width: 0.5cm;
+    padding: 1%;
+}

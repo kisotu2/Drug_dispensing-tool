@@ -1,0 +1,22 @@
+h1+p{
+    font-size: 200%;
+    color: red;
+    font-style:italic;
+    font-family:sans-serif;
+}
+li em{
+    color: red;
+    font-size:300%;
+}
+a:link{
+    color: yellowgreen;
+}
+a:visited{
+    color: brown;
+}
+a:hover{
+    color: green;
+}
+a:active{
+    background-color: green;
+}
